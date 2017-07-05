@@ -42,14 +42,14 @@ var n__21412__auto__ = a.length;
 var i = (0);
 while(true){
 if((i < n__21412__auto__)){
-var c_111 = (a[i]);
-if((c_111["cljsIsDirty"]) === true){
-(c_111["forceUpdate"])();
+var c_424 = (a[i]);
+if((c_424["cljsIsDirty"]) === true){
+(c_424["forceUpdate"])();
 } else {
 }
 
-var G__112 = (i + (1));
-i = G__112;
+var G__425 = (i + (1));
+i = G__425;
 continue;
 } else {
 return null;
@@ -87,8 +87,8 @@ while(true){
 if((i < n__21412__auto__)){
 (fs[i]).call(null);
 
-var G__113 = (i + (1));
-i = G__113;
+var G__426 = (i + (1));
+i = G__426;
 continue;
 } else {
 return null;
@@ -133,13 +133,13 @@ this$.run_funs("beforeFlush");
 
 reagent.impl.batching.ratom_flush.call(null);
 
-var temp__20057__auto___114 = (this$["componentQueue"]);
-if((temp__20057__auto___114 == null)){
+var temp__20057__auto___427 = (this$["componentQueue"]);
+if((temp__20057__auto___427 == null)){
 } else {
-var cs_115 = temp__20057__auto___114;
+var cs_428 = temp__20057__auto___427;
 (this$["componentQueue"] = null);
 
-reagent.impl.batching.run_queue.call(null,cs_115);
+reagent.impl.batching.run_queue.call(null,cs_428);
 }
 
 return this$.flush_after_render();
@@ -156,9 +156,9 @@ return this$.flush_queues();
 reagent.impl.batching.RenderQueue.prototype.enqueue = (function (k,f){
 var self__ = this;
 var this$ = this;
-if(cljs.core.truth_(f)){
+if(!((f == null))){
 } else {
-throw (new Error([cljs.core.str.cljs$core$IFn$_invoke$arity$1("Assert failed: "),cljs.core.str.cljs$core$IFn$_invoke$arity$1([cljs.core.str.cljs$core$IFn$_invoke$arity$1("Enqueued function"),cljs.core.str.cljs$core$IFn$_invoke$arity$1(" must not be nil")].join('')),cljs.core.str.cljs$core$IFn$_invoke$arity$1("\n"),cljs.core.str.cljs$core$IFn$_invoke$arity$1("f")].join('')));
+throw (new Error("Assert failed: (some? f)"));
 }
 
 if(((this$[k]) == null)){
@@ -201,7 +201,7 @@ return (new reagent.impl.batching.RenderQueue(scheduled_QMARK_));
 
 if(typeof reagent.impl.batching.render_queue !== 'undefined'){
 } else {
-reagent.impl.batching.render_queue = reagent.impl.batching.__GT_RenderQueue.call(null,false);
+reagent.impl.batching.render_queue = (new reagent.impl.batching.RenderQueue(false));
 }
 reagent.impl.batching.flush = (function reagent$impl$batching$flush(){
 return reagent.impl.batching.render_queue.flush_queues();

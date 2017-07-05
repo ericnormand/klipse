@@ -28,8 +28,8 @@ re_frame.cofx.register = cljs.core.partial.call(null,re_frame.registrar.register
  * 
  */
 re_frame.cofx.inject_cofx = (function re_frame$cofx$inject_cofx(var_args){
-var G__1010 = arguments.length;
-switch (G__1010) {
+var G__1322 = arguments.length;
+switch (G__1322) {
 case (1):
 return re_frame.cofx.inject_cofx.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
