@@ -1,0 +1,15 @@
+#!/bin/bash
+
+cd docs/cache-cljs
+rm *.js
+rm *.json
+rm *.cljc
+rm *.cljs
+rm cljs*
+rm clojure*
+
+cd -
+lumo scripts/generate-clojure-spec-cache.cljs
+
+cd docs/cache-cljs
+lumo -k . -c `lein classpath` ../../scripts/generate_external_namespaces.cljs
