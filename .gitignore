@@ -16,3 +16,4 @@ target/
 *.swp
 .cljs_node_repl/
 docs/cache-cljs/local-m2/
+docs/cache-cljs/node_modules/

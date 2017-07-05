@@ -37,14 +37,14 @@
                             require use refer-clojure
 
                             if-some when-some test ns-interns ns-unmap var vswap! macroexpand-1 macroexpand
-                            some?
+                            some? resolve
                             #?@(:cljs [alias coercive-not coercive-not= coercive-= coercive-boolean
                                        truth_ js-arguments js-delete js-in js-debugger exists? divide js-mod
                                        unsafe-bit-and bit-shift-right-zero-fill mask bitpos caching-hash
                                        defcurried rfn specify! js-this this-as implements? array js-obj
                                        simple-benchmark gen-apply-to js-str es6-iterable load-file* undefined?
                                        specify copy-arguments goog-define js-comment js-inline-comment
-                                       unsafe-cast require-macros use-macros])])
+                                       unsafe-cast require-macros use-macros gen-apply-to-simple])])
   #?(:cljs (:require-macros [cljs.core :as core]
                             [cljs.support :refer [assert-args]]))
   (:require clojure.walk
@@ -449,10 +449,13 @@
      [expr & clauses]
      (core/assert (even? (count clauses)))
      (core/let [g (gensym)
-                pstep (core/fn [[test step]] `(if ~test (-> ~g ~step) ~g))]
+                steps (map (core/fn [[test step]] `(if ~test (-> ~g ~step) ~g))
+                        (partition 2 clauses))]
        `(let [~g ~expr
-              ~@(interleave (repeat g) (map pstep (partition 2 clauses)))]
-          ~g))))
+              ~@(interleave (repeat g) (butlast steps))]
+          ~(if (empty? steps)
+             g
+             (last steps))))))
 
 #?(:cljs
    (core/defmacro cond->>
@@ -463,10 +466,13 @@
      [expr & clauses]
      (core/assert (even? (count clauses)))
      (core/let [g (gensym)
-                pstep (core/fn [[test step]] `(if ~test (->> ~g ~step) ~g))]
+                steps (map (core/fn [[test step]] `(if ~test (->> ~g ~step) ~g))
+                        (partition 2 clauses))]
        `(let [~g ~expr
-              ~@(interleave (repeat g) (map pstep (partition 2 clauses)))]
-          ~g))))
+              ~@(interleave (repeat g) (butlast steps))]
+          ~(if (empty? steps)
+             g
+             (last steps))))))
 
 #?(:cljs
    (core/defmacro as->
@@ -475,8 +481,10 @@
      successive form, returning the result of the last form."
      [expr name & forms]
      `(let [~name ~expr
-            ~@(interleave (repeat name) forms)]
-        ~name)))
+            ~@(interleave (repeat name) (butlast forms))]
+        ~(if (empty? forms)
+           name
+           (last forms)))))
 
 #?(:cljs
    (core/defmacro some->
@@ -484,10 +492,13 @@
      and when that result is not nil, through the next etc"
      [expr & forms]
      (core/let [g (gensym)
-                pstep (core/fn [step] `(if (nil? ~g) nil (-> ~g ~step)))]
+                steps (map (core/fn [step] `(if (nil? ~g) nil (-> ~g ~step)))
+                        forms)]
        `(let [~g ~expr
-              ~@(interleave (repeat g) (map pstep forms))]
-          ~g))))
+              ~@(interleave (repeat g) (butlast steps))]
+          ~(if (empty? steps)
+             g
+             (last steps))))))
 
 #?(:cljs
    (core/defmacro some->>
@@ -495,10 +506,13 @@
      and when that result is not nil, through the next etc"
      [expr & forms]
      (core/let [g (gensym)
-                pstep (core/fn [step] `(if (nil? ~g) nil (->> ~g ~step)))]
+                steps (map (core/fn [step] `(if (nil? ~g) nil (->> ~g ~step)))
+                        forms)]
        `(let [~g ~expr
-              ~@(interleave (repeat g) (map pstep forms))]
-          ~g))))
+              ~@(interleave (repeat g) (butlast steps))]
+          ~(if (empty? steps)
+             g
+             (last steps))))))
 
 #?(:cljs
    (core/defmacro if-some
@@ -789,7 +803,7 @@
                  IPrintWithWriter IPending IWatchable IEditableCollection ITransientCollection
                  ITransientAssociative ITransientMap ITransientVector ITransientSet
                  IMultiFn IChunkedSeq IChunkedNext IComparable INamed ICloneable IAtom
-                 IReset ISwap])
+                 IReset ISwap IIterable])
           (iterate (core/fn [[p b]]
                      (if (core/== 2147483648 b)
                        [(core/inc p) 1]
@@ -1270,8 +1284,8 @@
 
   (seq (let [f \"foo\"]
        (reify ISeqable
-         (-seq [this] (-seq f)))))
-  == (\\f \\o \\o))
+         (-seq [this] (seq f)))))
+  == (\"f\" \"o\" \"o\"))
 
   reify always implements IMeta and IWithMeta and transfers meta
   data of the form to the created object.
@@ -1484,6 +1498,8 @@
                      c   (count sig)]
             (core/when (contains? seen c)
               (ana/warning :protocol-duped-method env {:protocol p :fname fname}))
+            (core/when (some '#{&} sig)
+              (ana/warning :protocol-impl-with-variadic-method env {:protocol p :name fname}))
             (core/when (core/and (not= decmeths ::not-found) (not (some #{c} (map count decmeths))))
               (ana/warning :protocol-invalid-method env {:protocol p :fname fname :invalid-arity c}))
             (recur (next sigs) (conj seen c))))))))
@@ -1558,7 +1574,7 @@
     (-count [c] ...)
     Foo
     (bar [x y] ...)
-    (baz ([x] ...) ([x y & zs] ...))"
+    (baz ([x] ...) ([x y] ...) ...)"
   [type-sym & impls]
   (core/let [env &env
              _ (validate-impls env impls)
@@ -1732,15 +1748,25 @@
                         'ICloneable
                         `(~'-clone [this#] (new ~tagname ~@fields))
                         'IHash
-                        `(~'-hash [this#] (caching-hash this# ~'hash-imap ~'__hash))
+                        `(~'-hash [this#]
+                           (caching-hash this#
+                             (fn [coll#]
+                               (bit-xor
+                                 ~(hash (core/-> rname comp/munge core/str))
+                                 (hash-unordered-coll coll#)))
+                             ~'__hash))
                         'IEquiv
-                        `(~'-equiv [this# other#]
-                           (if (and other#
-                                 (identical? (.-constructor this#)
-                                   (.-constructor other#))
-                                 (equiv-map this# other#))
-                             true
-                             false))
+                        (core/let [this (gensym 'this) other (gensym 'other)]
+                          `(~'-equiv [~this ~other]
+                             (and (some? ~other)
+                                  (identical? (.-constructor ~this)
+                                              (.-constructor ~other))
+                                  ~@(map (core/fn [field]
+                                           `(= (.. ~this ~(to-property field))
+                                               (.. ~other ~(to-property field))))
+                                         base-fields)
+                                  (= (.-__extmap ~this)
+                                     (.-__extmap ~other)))))
                         'IMeta
                         `(~'-meta [this#] ~'__meta)
                         'IWithMeta
@@ -1769,7 +1795,7 @@
                              (new ~tagname ~@(remove #{'__extmap '__hash} fields) (assoc ~'__extmap k# ~gs) nil)))
                         'IMap
                         `(~'-dissoc [this# k#] (if (contains? #{~@(map keyword base-fields)} k#)
-                                                 (dissoc (with-meta (into {} this#) ~'__meta) k#)
+                                                 (dissoc (-with-meta (into {} this#) ~'__meta) k#)
                                                  (new ~tagname ~@(remove #{'__extmap '__hash} fields)
                                                    (not-empty (dissoc ~'__extmap k#))
                                                    nil)))
@@ -1807,7 +1833,7 @@
              ks (map keyword fields)
              getters (map (core/fn [k] `(~k ~ms)) ks)]
     `(defn ~fn-name [~ms]
-       (new ~rname ~@getters nil (dissoc ~ms ~@ks) nil))))
+       (new ~rname ~@getters nil (not-empty (dissoc ~ms ~@ks)) nil))))
 
 (core/defmacro defrecord
   "(defrecord name [fields*]  options* specs*)
@@ -2192,11 +2218,12 @@
   expression, a vector can be used to match a list if needed. The
   test-constants need not be all of the same type."
   [e & clauses]
-  (core/let [default (if (odd? (count clauses))
+  (core/let [esym    (gensym)
+             default (if (odd? (count clauses))
                        (last clauses)
                        `(throw
                           (js/Error.
-                            (cljs.core/str "No matching clause: " ~e))))
+                            (cljs.core/str "No matching clause: " ~esym))))
              env     &env
              pairs   (reduce
                        (core/fn [m [test expr]]
@@ -2214,7 +2241,6 @@
                            :else
                            (assoc-test m test expr env)))
                      {} (partition 2 clauses))
-             esym    (gensym)
              tests   (keys pairs)]
     (core/cond
       (every? (some-fn core/number? core/string? #?(:clj core/char? :cljs (core/fnil core/char? :nonchar)) #(const? env %)) tests)
@@ -2224,11 +2250,10 @@
         `(let [~esym ~e] (case* ~esym ~tests ~thens ~default)))
 
       (every? core/keyword? tests)
-      (core/let [tests (core/->> tests
-                         (map #(.substring (core/str %) 1))
-                         vec
-                         (mapv #(if (seq? %) (vec %) [%])))
-                 thens (vec (vals pairs))]
+      (core/let [no-default (if (odd? (count clauses)) (butlast clauses) clauses)
+                 kw-str #(.substring (core/str %) 1)
+                 tests (mapv #(if (seq? %) (mapv kw-str %) [(kw-str %)]) (take-nth 2 no-default))
+                 thens (vec (take-nth 2 (drop 1 no-default)))]
         `(let [~esym ~e
                ~esym (if (keyword? ~esym) (.-fqn ~esym) nil)]
            (case* ~esym ~tests ~thens ~default)))
@@ -2645,17 +2670,13 @@
 (core/defn- gen-apply-to-helper
   ([] (gen-apply-to-helper 1))
   ([n]
-   (core/let [prop (symbol (core/str "-cljs$core$IFn$_invoke$arity$" n))
-              f (symbol (core/str "cljs$core$IFn$_invoke$arity$" n))]
-     (if (core/<= n 20)
-       `(let [~(cs (core/dec n)) (-first ~'args)
-              ~'args (-rest ~'args)]
-          (if (== ~'argc ~n)
-            (if (. ~'f ~prop)
-              (. ~'f (~f ~@(take n cs)))
-              (~'f ~@(take n cs)))
-            ~(gen-apply-to-helper (core/inc n))))
-       `(throw (js/Error. "Only up to 20 arguments supported on functions"))))))
+   (if (core/<= n 20)
+     `(let [~(cs (core/dec n)) (-first ~'args)
+            ~'args (-rest ~'args)]
+        (if (== ~'argc ~n)
+          (~'f ~@(take n cs))
+          ~(gen-apply-to-helper (core/inc n))))
+     `(throw (js/Error. "Only up to 20 arguments supported on functions")))))
 
 (core/defmacro gen-apply-to []
   `(do
@@ -2666,6 +2687,34 @@
            (~'f)
            ~(gen-apply-to-helper))))
      (set! ~'*unchecked-if* false)))
+
+(core/defn- gen-apply-to-simple-helper
+  [f num-args args]
+  (core/let [new-arg-sym (symbol (core/str "a" num-args))
+             proto-name (core/str "cljs$core$IFn$_invoke$arity$" (core/inc num-args))
+             proto-prop (symbol (core/str ".-" proto-name))
+             proto-inv (symbol (core/str "." proto-name))
+             next-sym (symbol (core/str "next_" num-args))
+             all-args (mapv #(symbol (core/str "a" %)) (range (core/inc num-args)))]
+    `(let [~new-arg-sym (cljs.core/-first ~args)
+           ~next-sym (cljs.core/next ~args)]
+       (if (nil? ~next-sym)
+         (if (~proto-prop ~f)
+           (~proto-inv ~f ~@all-args)
+           (.call ~f ~f ~@all-args))
+         ~(if (core/<= 19 num-args)
+            ;; We've exhausted all protocols, fallback to .apply:
+            `(let [arr# (cljs.core/array ~@all-args)]
+               (loop [s# ~next-sym]
+                 (when s#
+                   (do (.push arr# (cljs.core/-first s#))
+                       (recur (cljs.core/next s#)))))
+               (.apply ~f ~f arr#))
+            (gen-apply-to-simple-helper f (core/inc num-args) next-sym))))))
+
+(core/defmacro gen-apply-to-simple
+  [f num-args args]
+  (gen-apply-to-simple-helper f num-args args))
 
 (core/defmacro with-out-str
   "Evaluates exprs in a context in which *print-fn* is bound to .append
@@ -2757,7 +2806,7 @@
   Recognized options:
   :as takes a symbol as its argument and makes that symbol an alias to the
     lib's namespace in the current namespace.
-  :refer takes a list of symbols to refer from the namespace..
+  :refer takes a list of symbols to refer from the namespace.
   :refer-macros takes a list of macro symbols to refer from the namespace.
   :include-macros true causes macros from the namespace to be required.
   :rename specifies a map from referred var names to different
@@ -2778,7 +2827,7 @@
 
   The following would load the library clojure.string :as string.
 
-  (require '[clojure/string :as string])"
+  (require '[clojure.string :as string])"
   [& args]
   `(~'ns* ~(cons :require args)))
 
@@ -2973,26 +3022,29 @@
                            :method-params sigs
                            :arglists arglists
                            :arglists-meta (doall (map meta arglists))})
-               args-sym (gensym "args")]
+               args-sym (gensym "args")
+               param-counts (map count arglists)]
+      (core/when (not= (distinct param-counts) param-counts)
+        (ana/warning :overload-arity {} {:name name}))
       `(do
          (def ~(with-meta name meta)
            (fn [~'var_args]
-             (let [~args-sym (array)]
-               (copy-arguments ~args-sym)
-               (case (alength ~args-sym)
-                ~@(mapcat #(fixed-arity rname %) sigs)
-                ~(if variadic
-                   `(let [argseq# (new ^::ana/no-resolve cljs.core/IndexedSeq
-                                    (.slice ~args-sym ~maxfa) 0 nil)]
-                      (. ~rname
-                        (~'cljs$core$IFn$_invoke$arity$variadic
-                          ~@(dest-args maxfa)
-                          argseq#)))
-                   (if (:macro meta)
-                     `(throw (js/Error.
-                               (str "Invalid arity: " (- (alength ~args-sym) 2))))
-                     `(throw (js/Error.
-                               (str "Invalid arity: " (alength ~args-sym))))))))))
+             (case (alength (js-arguments))
+               ~@(mapcat #(fixed-arity rname %) sigs)
+               ~(if variadic
+                  `(let [args-arr# (array)]
+                     (copy-arguments args-arr#)
+                     (let [argseq# (new ^::ana/no-resolve cljs.core/IndexedSeq
+                                        (.slice args-arr# ~maxfa) 0 nil)]
+                       (. ~rname
+                          (~'cljs$core$IFn$_invoke$arity$variadic
+                           ~@(dest-args maxfa)
+                           argseq#))))
+                  (if (:macro meta)
+                    `(throw (js/Error.
+                             (str "Invalid arity: " (- (alength (js-arguments)) 2))))
+                    `(throw (js/Error.
+                             (str "Invalid arity: " (alength (js-arguments))))))))))
          ~@(map fn-method fdecl)
          ;; optimization properties
          (set! (. ~name ~'-cljs$lang$maxFixedArity) ~maxfa)
@@ -3127,3 +3179,16 @@
 
 #?(:clj  (. (var defmacro) (setMacro))
    :cljs (set! (. defmacro -cljs$lang$macro) true))
+
+(core/defmacro resolve
+  "Returns the var to which a symbol will be resolved in the namespace else nil."
+  [[_ sym]]
+  (core/let [env &env
+             [var meta] (try
+                          (core/let [var (ana/resolve-var env sym (ana/confirm-var-exists-throw)) ]
+                            [var (ana/var-meta var)])
+                          (catch #?@(:clj [Throwable t] :cljs [:default e])
+                            [(ana/resolve-var env sym) nil]))
+             resolved (vary-meta (:name var) assoc ::ana/no-resolve true)]
+    `(when (exists? ~resolved)
+       (cljs.core/Var. (fn [] ~resolved) '~resolved ~meta))))

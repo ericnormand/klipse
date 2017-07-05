@@ -1,7 +1,7 @@
 (defproject klipse "7.0.6"
   :description "Embeddable multi-language WEB REPL"
   :dependencies [[org.clojure/clojure "1.9.0-alpha14"]
-                 [org.clojure/clojurescript "1.9.542"]
+                 [org.clojure/clojurescript "1.9.671"]
                  [org.clojure/core.async "0.2.395"]
                  [binaryage/devtools "0.8.2"]
                  [im.chit/purnam "0.5.2"]

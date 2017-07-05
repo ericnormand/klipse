@@ -23,10 +23,10 @@ new cljs.core.Var(function(){return clojure.data.atom_diff;},new cljs.core.Symbo
 (function (){
 clojure.data.vectorize = (function clojure$data$vectorize(m){
 if(cljs.core.seq(m)){
-return cljs.core.reduce.cljs$core$IFn$_invoke$arity$3((function (result,p__3763){
-var vec__3764 = p__3763;
-var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__3764,(0),null);
-var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__3764,(1),null);
+return cljs.core.reduce.cljs$core$IFn$_invoke$arity$3((function (result,p__2474){
+var vec__2475 = p__2474;
+var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__2475,(0),null);
+var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__2475,(1),null);
 return cljs.core.assoc.cljs$core$IFn$_invoke$arity$3(result,k,v);
 }),cljs.core.vec(cljs.core.repeat.cljs$core$IFn$_invoke$arity$2(cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.max,cljs.core.keys(m)),null)),m);
 } else {
@@ -42,10 +42,10 @@ new cljs.core.Var(function(){return clojure.data.vectorize;},new cljs.core.Symbo
 clojure.data.diff_associative_key = (function clojure$data$diff_associative_key(a,b,k){
 var va = cljs.core.get.cljs$core$IFn$_invoke$arity$2(a,k);
 var vb = cljs.core.get.cljs$core$IFn$_invoke$arity$2(b,k);
-var vec__3770 = (clojure.data.diff.cljs$core$IFn$_invoke$arity$2 ? clojure.data.diff.cljs$core$IFn$_invoke$arity$2(va,vb) : clojure.data.diff.call(null,va,vb));
-var a_STAR_ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__3770,(0),null);
-var b_STAR_ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__3770,(1),null);
-var ab = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__3770,(2),null);
+var vec__2478 = (clojure.data.diff.cljs$core$IFn$_invoke$arity$2 ? clojure.data.diff.cljs$core$IFn$_invoke$arity$2(va,vb) : clojure.data.diff(va,vb));
+var a_STAR_ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__2478,(0),null);
+var b_STAR_ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__2478,(1),null);
+var ab = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__2478,(2),null);
 var in_a = cljs.core.contains_QMARK_(a,k);
 var in_b = cljs.core.contains_QMARK_(b,k);
 var same = (in_a) && (in_b) && ((!((ab == null))) || (((va == null)) && ((vb == null))));
@@ -58,23 +58,8 @@ new cljs.core.Var(function(){return clojure.data.diff_associative_key;},new cljs
  */
 (function (){
 clojure.data.diff_associative = (function clojure$data$diff_associative(var_args){
-var args3773 = [];
-var len__26427__auto___3776 = arguments.length;
-var i__26428__auto___3777 = (0);
-while(true){
-if((i__26428__auto___3777 < len__26427__auto___3776)){
-args3773.push((arguments[i__26428__auto___3777]));
-
-var G__3778 = (i__26428__auto___3777 + (1));
-i__26428__auto___3777 = G__3778;
-continue;
-} else {
-}
-break;
-}
-
-var G__3775 = args3773.length;
-switch (G__3775) {
+var G__2482 = arguments.length;
+switch (G__2482) {
 case (2):
 return clojure.data.diff_associative.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -84,7 +69,7 @@ return clojure.data.diff_associative.cljs$core$IFn$_invoke$arity$3((arguments[(0
 
 break;
 default:
-throw (new Error([cljs.core.str.cljs$core$IFn$_invoke$arity$1("Invalid arity: "),cljs.core.str.cljs$core$IFn$_invoke$arity$1(args3773.length)].join('')));
+throw (new Error([cljs.core.str.cljs$core$IFn$_invoke$arity$1("Invalid arity: "),cljs.core.str.cljs$core$IFn$_invoke$arity$1(arguments.length)].join('')));
 
 }
 }); return (
@@ -106,9 +91,9 @@ clojure.data.diff_associative.cljs$lang$maxFixedArity = (3);
 new cljs.core.Var(function(){return clojure.data.diff_associative;},new cljs.core.Symbol("clojure.data","diff-associative","clojure.data/diff-associative",(1378922723),null),cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"private","private",(-558947994)),new cljs.core.Keyword(null,"ns","ns",(441598760)),new cljs.core.Keyword(null,"name","name",(1843675177)),new cljs.core.Keyword(null,"file","file",(-1269645878)),new cljs.core.Keyword(null,"end-column","end-column",(1425389514)),new cljs.core.Keyword(null,"top-fn","top-fn",(-2056129173)),new cljs.core.Keyword(null,"column","column",(2078222095)),new cljs.core.Keyword(null,"line","line",(212345235)),new cljs.core.Keyword(null,"end-line","end-line",(1837326455)),new cljs.core.Keyword(null,"arglists","arglists",(1661989754)),new cljs.core.Keyword(null,"doc","doc",(1913296891)),new cljs.core.Keyword(null,"test","test",(577538877))],[true,cljs.core.with_meta(new cljs.core.Symbol(null,"clojure.data","clojure.data",(-2083828516),null),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"author","author",(2111686192)),"Stuart Halloway",new cljs.core.Keyword(null,"doc","doc",(1913296891)),"Non-core data functions."], null)),new cljs.core.Symbol(null,"diff-associative","diff-associative",(1545327),null),"clojure/data.cljs",(24),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"variadic","variadic",(882626057)),false,new cljs.core.Keyword(null,"max-fixed-arity","max-fixed-arity",(-690205543)),(3),new cljs.core.Keyword(null,"method-params","method-params",(-980792179)),cljs.core.list(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"a","a",(-482876059),null),new cljs.core.Symbol(null,"b","b",(-1172211299),null)], null),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"a","a",(-482876059),null),new cljs.core.Symbol(null,"b","b",(-1172211299),null),new cljs.core.Symbol(null,"ks","ks",(-754231827),null)], null)),new cljs.core.Keyword(null,"arglists","arglists",(1661989754)),cljs.core.list(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"a","a",(-482876059),null),new cljs.core.Symbol(null,"b","b",(-1172211299),null)], null),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"a","a",(-482876059),null),new cljs.core.Symbol(null,"b","b",(-1172211299),null),new cljs.core.Symbol(null,"ks","ks",(-754231827),null)], null)),new cljs.core.Keyword(null,"arglists-meta","arglists-meta",(1944829838)),cljs.core.list(null,null)], null),(1),(49),(49),cljs.core.list(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"a","a",(-482876059),null),new cljs.core.Symbol(null,"b","b",(-1172211299),null)], null),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"a","a",(-482876059),null),new cljs.core.Symbol(null,"b","b",(-1172211299),null),new cljs.core.Symbol(null,"ks","ks",(-754231827),null)], null)),"Diff associative things a and b, comparing only keys in ks (if supplied).",(cljs.core.truth_(clojure.data.diff_associative)?clojure.data.diff_associative.cljs$lang$test:null)]));
 (function (){
 clojure.data.diff_sequential = (function clojure$data$diff_sequential(a,b){
-return cljs.core.vec(cljs.core.map.cljs$core$IFn$_invoke$arity$2(clojure.data.vectorize,clojure.data.diff_associative.cljs$core$IFn$_invoke$arity$3(((cljs.core.vector_QMARK_(a))?a:cljs.core.vec(a)),((cljs.core.vector_QMARK_(b))?b:cljs.core.vec(b)),cljs.core.range.cljs$core$IFn$_invoke$arity$1((function (){var x__25322__auto__ = cljs.core.count(a);
-var y__25323__auto__ = cljs.core.count(b);
-return ((x__25322__auto__ > y__25323__auto__) ? x__25322__auto__ : y__25323__auto__);
+return cljs.core.vec(cljs.core.map.cljs$core$IFn$_invoke$arity$2(clojure.data.vectorize,clojure.data.diff_associative.cljs$core$IFn$_invoke$arity$3(((cljs.core.vector_QMARK_(a))?a:cljs.core.vec(a)),((cljs.core.vector_QMARK_(b))?b:cljs.core.vec(b)),cljs.core.range.cljs$core$IFn$_invoke$arity$1((function (){var x__20767__auto__ = cljs.core.count(a);
+var y__20768__auto__ = cljs.core.count(b);
+return ((x__20767__auto__ > y__20768__auto__) ? x__20767__auto__ : y__20768__auto__);
 })()))));
 }); return (
 new cljs.core.Var(function(){return clojure.data.diff_sequential;},new cljs.core.Symbol("clojure.data","diff-sequential","clojure.data/diff-sequential",(-530494291),null),cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"private","private",(-558947994)),new cljs.core.Keyword(null,"ns","ns",(441598760)),new cljs.core.Keyword(null,"name","name",(1843675177)),new cljs.core.Keyword(null,"file","file",(-1269645878)),new cljs.core.Keyword(null,"end-column","end-column",(1425389514)),new cljs.core.Keyword(null,"column","column",(2078222095)),new cljs.core.Keyword(null,"line","line",(212345235)),new cljs.core.Keyword(null,"end-line","end-line",(1837326455)),new cljs.core.Keyword(null,"arglists","arglists",(1661989754)),new cljs.core.Keyword(null,"doc","doc",(1913296891)),new cljs.core.Keyword(null,"test","test",(577538877))],[true,cljs.core.with_meta(new cljs.core.Symbol(null,"clojure.data","clojure.data",(-2083828516),null),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"author","author",(2111686192)),"Stuart Halloway",new cljs.core.Keyword(null,"doc","doc",(1913296891)),"Non-core data functions."], null)),new cljs.core.Symbol(null,"diff-sequential","diff-sequential",(839149625),null),"clojure/data.cljs",(23),(1),(62),(62),cljs.core.list(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"a","a",(-482876059),null),new cljs.core.Symbol(null,"b","b",(-1172211299),null)], null)),null,(cljs.core.truth_(clojure.data.diff_sequential)?clojure.data.diff_sequential.cljs$lang$test:null)])));})()
@@ -126,7 +111,7 @@ new cljs.core.Var(function(){return clojure.data.diff_set;},new cljs.core.Symbol
  */
 (function (){
 clojure.data.EqualityPartition = function(){}; return (
-new cljs.core.Var(function(){return clojure.data.EqualityPartition;},new cljs.core.Symbol("clojure.data","EqualityPartition","clojure.data/EqualityPartition",(-2099186728),null),cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"protocol-symbol","protocol-symbol",(1279552198)),new cljs.core.Keyword(null,"ns","ns",(441598760)),new cljs.core.Keyword(null,"name","name",(1843675177)),new cljs.core.Keyword(null,"file","file",(-1269645878)),new cljs.core.Keyword(null,"end-column","end-column",(1425389514)),new cljs.core.Keyword(null,"column","column",(2078222095)),new cljs.core.Keyword(null,"line","line",(212345235)),new cljs.core.Keyword(null,"protocol-info","protocol-info",(1471745843)),new cljs.core.Keyword(null,"end-line","end-line",(1837326455)),new cljs.core.Keyword(null,"arglists","arglists",(1661989754)),new cljs.core.Keyword(null,"doc","doc",(1913296891)),new cljs.core.Keyword(null,"jsdoc","jsdoc",(1745183516)),new cljs.core.Keyword(null,"test","test",(577538877))],[true,cljs.core.with_meta(new cljs.core.Symbol(null,"clojure.data","clojure.data",(-2083828516),null),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"author","author",(2111686192)),"Stuart Halloway",new cljs.core.Keyword(null,"doc","doc",(1913296891)),"Non-core data functions."], null)),new cljs.core.Symbol(null,"EqualityPartition","EqualityPartition",(-255599508),null),"clojure/data.cljs",(31),(1),(75),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"methods","methods",(453930866)),cljs.core.PersistentArrayMap.createAsIfByAssoc([cljs.core.with_meta(new cljs.core.Symbol(null,"equality-partition","equality-partition",(1419043626),null),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"doc","doc",(1913296891)),"Implementation detail. Subject to change."], null)),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"x","x",(-555367584),null)], null)], null)])], null),(75),cljs.core.List.EMPTY,"Implementation detail. Subject to change.",cljs.core.list("@interface"),(cljs.core.truth_(clojure.data.EqualityPartition)?clojure.data.EqualityPartition.cljs$lang$test:null)])));})()
+new cljs.core.Var(function(){return clojure.data.EqualityPartition;},new cljs.core.Symbol("clojure.data","EqualityPartition","clojure.data/EqualityPartition",(-2099186728),null),cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"protocol-symbol","protocol-symbol",(1279552198)),new cljs.core.Keyword(null,"ns","ns",(441598760)),new cljs.core.Keyword(null,"name","name",(1843675177)),new cljs.core.Keyword(null,"file","file",(-1269645878)),new cljs.core.Keyword(null,"end-column","end-column",(1425389514)),new cljs.core.Keyword(null,"column","column",(2078222095)),new cljs.core.Keyword(null,"line","line",(212345235)),new cljs.core.Keyword(null,"protocol-info","protocol-info",(1471745843)),new cljs.core.Keyword(null,"end-line","end-line",(1837326455)),new cljs.core.Keyword(null,"arglists","arglists",(1661989754)),new cljs.core.Keyword(null,"doc","doc",(1913296891)),new cljs.core.Keyword(null,"jsdoc","jsdoc",(1745183516)),new cljs.core.Keyword(null,"test","test",(577538877))],[true,cljs.core.with_meta(new cljs.core.Symbol(null,"clojure.data","clojure.data",(-2083828516),null),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"author","author",(2111686192)),"Stuart Halloway",new cljs.core.Keyword(null,"doc","doc",(1913296891)),"Non-core data functions."], null)),new cljs.core.Symbol(null,"EqualityPartition","EqualityPartition",(-255599508),null),"clojure/data.cljs",(31),(1),(75),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"methods","methods",(453930866)),cljs.core.PersistentArrayMap.createAsIfByAssoc([cljs.core.with_meta(new cljs.core.Symbol(null,"equality-partition","equality-partition",(1419043626),null),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"doc","doc",(1913296891)),"Implementation detail. Subject to change."], null)),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"x","x",(-555367584),null)], null)], null)])], null),(75),cljs.core.List.EMPTY,"Implementation detail. Subject to change.",cljs.core.list("@interface"),((clojure.data.EqualityPartition)?clojure.data.EqualityPartition.cljs$lang$test:null)])));})()
 ;
 
 /**
@@ -137,21 +122,21 @@ clojure.data.equality_partition = (function clojure$data$equality_partition(x){
 if((!((x == null))) && (!((x.clojure$data$EqualityPartition$equality_partition$arity$1 == null)))){
 return x.clojure$data$EqualityPartition$equality_partition$arity$1(x);
 } else {
-var x__25783__auto__ = (((x == null))?null:x);
-var m__25784__auto__ = (clojure.data.equality_partition[goog.typeOf(x__25783__auto__)]);
-if(!((m__25784__auto__ == null))){
-return (m__25784__auto__.cljs$core$IFn$_invoke$arity$1 ? m__25784__auto__.cljs$core$IFn$_invoke$arity$1(x) : m__25784__auto__.call(null,x));
+var x__21129__auto__ = (((x == null))?null:x);
+var m__21130__auto__ = (clojure.data.equality_partition[goog.typeOf(x__21129__auto__)]);
+if(!((m__21130__auto__ == null))){
+return (m__21130__auto__.cljs$core$IFn$_invoke$arity$1 ? m__21130__auto__.cljs$core$IFn$_invoke$arity$1(x) : m__21130__auto__(x));
 } else {
-var m__25784__auto____$1 = (clojure.data.equality_partition["_"]);
-if(!((m__25784__auto____$1 == null))){
-return (m__25784__auto____$1.cljs$core$IFn$_invoke$arity$1 ? m__25784__auto____$1.cljs$core$IFn$_invoke$arity$1(x) : m__25784__auto____$1.call(null,x));
+var m__21130__auto____$1 = (clojure.data.equality_partition["_"]);
+if(!((m__21130__auto____$1 == null))){
+return (m__21130__auto____$1.cljs$core$IFn$_invoke$arity$1 ? m__21130__auto____$1.cljs$core$IFn$_invoke$arity$1(x) : m__21130__auto____$1(x));
 } else {
 throw cljs.core.missing_protocol("EqualityPartition.equality-partition",x);
 }
 }
 }
 }); return (
-new cljs.core.Var(function(){return clojure.data.equality_partition;},new cljs.core.Symbol("clojure.data","equality-partition","clojure.data/equality-partition",(-1501847714),null),cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"protocol","protocol",(652470118)),new cljs.core.Keyword(null,"ns","ns",(441598760)),new cljs.core.Keyword(null,"name","name",(1843675177)),new cljs.core.Keyword(null,"file","file",(-1269645878)),new cljs.core.Keyword(null,"end-column","end-column",(1425389514)),new cljs.core.Keyword(null,"column","column",(2078222095)),new cljs.core.Keyword(null,"line","line",(212345235)),new cljs.core.Keyword(null,"end-line","end-line",(1837326455)),new cljs.core.Keyword(null,"arglists","arglists",(1661989754)),new cljs.core.Keyword(null,"doc","doc",(1913296891)),new cljs.core.Keyword(null,"test","test",(577538877))],[new cljs.core.Symbol("clojure.data","EqualityPartition","clojure.data/EqualityPartition",(-2099186728),null),cljs.core.with_meta(new cljs.core.Symbol(null,"clojure.data","clojure.data",(-2083828516),null),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"author","author",(2111686192)),"Stuart Halloway",new cljs.core.Keyword(null,"doc","doc",(1913296891)),"Non-core data functions."], null)),new cljs.core.Symbol(null,"equality-partition","equality-partition",(1419043626),null),"clojure/data.cljs",(22),(1),(75),(77),cljs.core.list(new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"x","x",(-555367584),null)], null)),"Implementation detail. Subject to change.",(cljs.core.truth_(clojure.data.equality_partition)?clojure.data.equality_partition.cljs$lang$test:null)])));})()
+new cljs.core.Var(function(){return clojure.data.equality_partition;},new cljs.core.Symbol("clojure.data","equality-partition","clojure.data/equality-partition",(-1501847714),null),cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"protocol","protocol",(652470118)),new cljs.core.Keyword(null,"ns","ns",(441598760)),new cljs.core.Keyword(null,"name","name",(1843675177)),new cljs.core.Keyword(null,"file","file",(-1269645878)),new cljs.core.Keyword(null,"end-column","end-column",(1425389514)),new cljs.core.Keyword(null,"column","column",(2078222095)),new cljs.core.Keyword(null,"line","line",(212345235)),new cljs.core.Keyword(null,"end-line","end-line",(1837326455)),new cljs.core.Keyword(null,"arglists","arglists",(1661989754)),new cljs.core.Keyword(null,"doc","doc",(1913296891)),new cljs.core.Keyword(null,"test","test",(577538877))],[new cljs.core.Symbol("clojure.data","EqualityPartition","clojure.data/EqualityPartition",(-2099186728),null),cljs.core.with_meta(new cljs.core.Symbol(null,"clojure.data","clojure.data",(-2083828516),null),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"author","author",(2111686192)),"Stuart Halloway",new cljs.core.Keyword(null,"doc","doc",(1913296891)),"Non-core data functions."], null)),new cljs.core.Symbol(null,"equality-partition","equality-partition",(1419043626),null),"clojure/data.cljs",(22),(1),(75),(77),cljs.core.list(new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"x","x",(-555367584),null)], null)),"Implementation detail. Subject to change.",((clojure.data.equality_partition)?clojure.data.equality_partition.cljs$lang$test:null)])));})()
 ;
 
 
@@ -161,7 +146,7 @@ new cljs.core.Var(function(){return clojure.data.equality_partition;},new cljs.c
  */
 (function (){
 clojure.data.Diff = function(){}; return (
-new cljs.core.Var(function(){return clojure.data.Diff;},new cljs.core.Symbol("clojure.data","Diff","clojure.data/Diff",(-1724958619),null),cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"protocol-symbol","protocol-symbol",(1279552198)),new cljs.core.Keyword(null,"ns","ns",(441598760)),new cljs.core.Keyword(null,"name","name",(1843675177)),new cljs.core.Keyword(null,"file","file",(-1269645878)),new cljs.core.Keyword(null,"end-column","end-column",(1425389514)),new cljs.core.Keyword(null,"column","column",(2078222095)),new cljs.core.Keyword(null,"line","line",(212345235)),new cljs.core.Keyword(null,"protocol-info","protocol-info",(1471745843)),new cljs.core.Keyword(null,"end-line","end-line",(1837326455)),new cljs.core.Keyword(null,"arglists","arglists",(1661989754)),new cljs.core.Keyword(null,"doc","doc",(1913296891)),new cljs.core.Keyword(null,"jsdoc","jsdoc",(1745183516)),new cljs.core.Keyword(null,"test","test",(577538877))],[true,cljs.core.with_meta(new cljs.core.Symbol(null,"clojure.data","clojure.data",(-2083828516),null),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"author","author",(2111686192)),"Stuart Halloway",new cljs.core.Keyword(null,"doc","doc",(1913296891)),"Non-core data functions."], null)),new cljs.core.Symbol(null,"Diff","Diff",(-1425488399),null),"clojure/data.cljs",(18),(1),(79),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"methods","methods",(453930866)),cljs.core.PersistentArrayMap.createAsIfByAssoc([cljs.core.with_meta(new cljs.core.Symbol(null,"diff-similar","diff-similar",(230692495),null),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"doc","doc",(1913296891)),"Implementation detail. Subject to change."], null)),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"a","a",(-482876059),null),new cljs.core.Symbol(null,"b","b",(-1172211299),null)], null)], null)])], null),(79),cljs.core.List.EMPTY,"Implementation detail. Subject to change.",cljs.core.list("@interface"),(cljs.core.truth_(clojure.data.Diff)?clojure.data.Diff.cljs$lang$test:null)])));})()
+new cljs.core.Var(function(){return clojure.data.Diff;},new cljs.core.Symbol("clojure.data","Diff","clojure.data/Diff",(-1724958619),null),cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"protocol-symbol","protocol-symbol",(1279552198)),new cljs.core.Keyword(null,"ns","ns",(441598760)),new cljs.core.Keyword(null,"name","name",(1843675177)),new cljs.core.Keyword(null,"file","file",(-1269645878)),new cljs.core.Keyword(null,"end-column","end-column",(1425389514)),new cljs.core.Keyword(null,"column","column",(2078222095)),new cljs.core.Keyword(null,"line","line",(212345235)),new cljs.core.Keyword(null,"protocol-info","protocol-info",(1471745843)),new cljs.core.Keyword(null,"end-line","end-line",(1837326455)),new cljs.core.Keyword(null,"arglists","arglists",(1661989754)),new cljs.core.Keyword(null,"doc","doc",(1913296891)),new cljs.core.Keyword(null,"jsdoc","jsdoc",(1745183516)),new cljs.core.Keyword(null,"test","test",(577538877))],[true,cljs.core.with_meta(new cljs.core.Symbol(null,"clojure.data","clojure.data",(-2083828516),null),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"author","author",(2111686192)),"Stuart Halloway",new cljs.core.Keyword(null,"doc","doc",(1913296891)),"Non-core data functions."], null)),new cljs.core.Symbol(null,"Diff","Diff",(-1425488399),null),"clojure/data.cljs",(18),(1),(79),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"methods","methods",(453930866)),cljs.core.PersistentArrayMap.createAsIfByAssoc([cljs.core.with_meta(new cljs.core.Symbol(null,"diff-similar","diff-similar",(230692495),null),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"doc","doc",(1913296891)),"Implementation detail. Subject to change."], null)),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"a","a",(-482876059),null),new cljs.core.Symbol(null,"b","b",(-1172211299),null)], null)], null)])], null),(79),cljs.core.List.EMPTY,"Implementation detail. Subject to change.",cljs.core.list("@interface"),((clojure.data.Diff)?clojure.data.Diff.cljs$lang$test:null)])));})()
 ;
 
 /**
@@ -172,21 +157,21 @@ clojure.data.diff_similar = (function clojure$data$diff_similar(a,b){
 if((!((a == null))) && (!((a.clojure$data$Diff$diff_similar$arity$2 == null)))){
 return a.clojure$data$Diff$diff_similar$arity$2(a,b);
 } else {
-var x__25783__auto__ = (((a == null))?null:a);
-var m__25784__auto__ = (clojure.data.diff_similar[goog.typeOf(x__25783__auto__)]);
-if(!((m__25784__auto__ == null))){
-return (m__25784__auto__.cljs$core$IFn$_invoke$arity$2 ? m__25784__auto__.cljs$core$IFn$_invoke$arity$2(a,b) : m__25784__auto__.call(null,a,b));
+var x__21129__auto__ = (((a == null))?null:a);
+var m__21130__auto__ = (clojure.data.diff_similar[goog.typeOf(x__21129__auto__)]);
+if(!((m__21130__auto__ == null))){
+return (m__21130__auto__.cljs$core$IFn$_invoke$arity$2 ? m__21130__auto__.cljs$core$IFn$_invoke$arity$2(a,b) : m__21130__auto__(a,b));
 } else {
-var m__25784__auto____$1 = (clojure.data.diff_similar["_"]);
-if(!((m__25784__auto____$1 == null))){
-return (m__25784__auto____$1.cljs$core$IFn$_invoke$arity$2 ? m__25784__auto____$1.cljs$core$IFn$_invoke$arity$2(a,b) : m__25784__auto____$1.call(null,a,b));
+var m__21130__auto____$1 = (clojure.data.diff_similar["_"]);
+if(!((m__21130__auto____$1 == null))){
+return (m__21130__auto____$1.cljs$core$IFn$_invoke$arity$2 ? m__21130__auto____$1.cljs$core$IFn$_invoke$arity$2(a,b) : m__21130__auto____$1(a,b));
 } else {
 throw cljs.core.missing_protocol("Diff.diff-similar",a);
 }
 }
 }
 }); return (
-new cljs.core.Var(function(){return clojure.data.diff_similar;},new cljs.core.Symbol("clojure.data","diff-similar","clojure.data/diff-similar",(1072499067),null),cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"protocol","protocol",(652470118)),new cljs.core.Keyword(null,"ns","ns",(441598760)),new cljs.core.Keyword(null,"name","name",(1843675177)),new cljs.core.Keyword(null,"file","file",(-1269645878)),new cljs.core.Keyword(null,"end-column","end-column",(1425389514)),new cljs.core.Keyword(null,"column","column",(2078222095)),new cljs.core.Keyword(null,"line","line",(212345235)),new cljs.core.Keyword(null,"end-line","end-line",(1837326455)),new cljs.core.Keyword(null,"arglists","arglists",(1661989754)),new cljs.core.Keyword(null,"doc","doc",(1913296891)),new cljs.core.Keyword(null,"test","test",(577538877))],[new cljs.core.Symbol("clojure.data","Diff","clojure.data/Diff",(-1724958619),null),cljs.core.with_meta(new cljs.core.Symbol(null,"clojure.data","clojure.data",(-2083828516),null),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"author","author",(2111686192)),"Stuart Halloway",new cljs.core.Keyword(null,"doc","doc",(1913296891)),"Non-core data functions."], null)),new cljs.core.Symbol(null,"diff-similar","diff-similar",(230692495),null),"clojure/data.cljs",(16),(1),(79),(81),cljs.core.list(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"a","a",(-482876059),null),new cljs.core.Symbol(null,"b","b",(-1172211299),null)], null)),"Implementation detail. Subject to change.",(cljs.core.truth_(clojure.data.diff_similar)?clojure.data.diff_similar.cljs$lang$test:null)])));})()
+new cljs.core.Var(function(){return clojure.data.diff_similar;},new cljs.core.Symbol("clojure.data","diff-similar","clojure.data/diff-similar",(1072499067),null),cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"protocol","protocol",(652470118)),new cljs.core.Keyword(null,"ns","ns",(441598760)),new cljs.core.Keyword(null,"name","name",(1843675177)),new cljs.core.Keyword(null,"file","file",(-1269645878)),new cljs.core.Keyword(null,"end-column","end-column",(1425389514)),new cljs.core.Keyword(null,"column","column",(2078222095)),new cljs.core.Keyword(null,"line","line",(212345235)),new cljs.core.Keyword(null,"end-line","end-line",(1837326455)),new cljs.core.Keyword(null,"arglists","arglists",(1661989754)),new cljs.core.Keyword(null,"doc","doc",(1913296891)),new cljs.core.Keyword(null,"test","test",(577538877))],[new cljs.core.Symbol("clojure.data","Diff","clojure.data/Diff",(-1724958619),null),cljs.core.with_meta(new cljs.core.Symbol(null,"clojure.data","clojure.data",(-2083828516),null),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"author","author",(2111686192)),"Stuart Halloway",new cljs.core.Keyword(null,"doc","doc",(1913296891)),"Non-core data functions."], null)),new cljs.core.Symbol(null,"diff-similar","diff-similar",(230692495),null),"clojure/data.cljs",(16),(1),(79),(81),cljs.core.list(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"a","a",(-482876059),null),new cljs.core.Symbol(null,"b","b",(-1172211299),null)], null)),"Implementation detail. Subject to change.",((clojure.data.diff_similar)?clojure.data.diff_similar.cljs$lang$test:null)])));})()
 ;
 
 (clojure.data.EqualityPartition["null"] = true);
@@ -282,9 +267,9 @@ return clojure.data.atom_diff(a,b);
 (clojure.data.Diff["_"] = true);
 
 (clojure.data.diff_similar["_"] = (function (a,b){
-return (function (){var G__3783 = clojure.data.equality_partition(a);
-var G__3783__$1 = (((G__3783 instanceof cljs.core.Keyword))?G__3783.fqn:null);
-switch (G__3783__$1) {
+var fexpr__2488 = (function (){var G__2489 = clojure.data.equality_partition(a);
+var G__2489__$1 = (((G__2489 instanceof cljs.core.Keyword))?G__2489.fqn:null);
+switch (G__2489__$1) {
 case "atom":
 return clojure.data.atom_diff;
 
@@ -302,10 +287,11 @@ return clojure.data.diff_associative;
 
 break;
 default:
-throw (new Error([cljs.core.str.cljs$core$IFn$_invoke$arity$1("No matching clause: "),cljs.core.str.cljs$core$IFn$_invoke$arity$1(clojure.data.equality_partition(a))].join('')));
+throw (new Error([cljs.core.str.cljs$core$IFn$_invoke$arity$1("No matching clause: "),cljs.core.str.cljs$core$IFn$_invoke$arity$1(G__2489__$1)].join('')));
 
 }
-})().call(null,a,b);
+})();
+return (fexpr__2488.cljs$core$IFn$_invoke$arity$2 ? fexpr__2488.cljs$core$IFn$_invoke$arity$2(a,b) : fexpr__2488(a,b));
 }));
 /**
  * Recursively compares a and b, returning a tuple of

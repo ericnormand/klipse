@@ -1,4 +1,4 @@
-// Compiled by ClojureScript 1.9.542 {:static-fns true, :optimize-constants false}
+// Compiled by ClojureScript 1.9.671 {:static-fns true, :optimize-constants false}
 goog.provide('clojure.core.rrb_vector.interop');
 goog.require('cljs.core');
 goog.require('clojure.core.rrb_vector.protocols');
